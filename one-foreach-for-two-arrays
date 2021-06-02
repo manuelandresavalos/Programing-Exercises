@@ -1,0 +1,48 @@
+# Historial de datos entre 2 tablas
+# Busquedas en 2 tablas con 1 solo bucle for.
+
+#Descripcion:
+Tenemos 2 tablas (tipo excel o spreadsheet), con un API obtenemos 2 matrices.
+La matriz 1, contiene usuarios con 2 datos, email y nombre. Esta matriz agrega usuarios y borra otros cada una hora.
+La matriz 2, contiene usuarios con 2 datos también, email y nombre. En esta matriz guardamos todos los usuarios que alguna vez estuvieron en la matriz 1.
+Con esto logramos tener un historial de usuarios en la matriz 2 basandonos en la matriz 1.
+
+
+function main()
+{
+  //Add info in table 1
+  let table1 = [
+    ['manu1@email.com', 'manu1'],
+    ['manu3@email.com', 'manu3'],
+    ['manu29@email.com', 'manu29'],
+  ].sort()
+
+  //Add info in table 2
+  let table2 = [
+    ['manu1@email.com', 'manu1', new Date()],
+    [ 'manu2@email.com', 'manu2', new Date() ],
+    [ 'manu3@email.com', 'manu3', new Date() ],
+    [ 'manu4@email.com', 'manu4', new Date() ],
+    [ 'manu5@email.com', 'manu5', new Date() ]
+  ].sort()
+
+  //Flat table2 to find emails
+  let table2Flated = table2.flat();
+
+  //Iterate table1 and compare it with table2 that was flated.
+  table1.forEach((row, index)=>{
+    let email = row[0];
+    let emailExist = table2Flated.includes(email)
+    if(emailExist)
+    {
+      console.log(index, email + " exist!")
+    } else {
+      console.log(index, email + " not exist :(")
+      table2.push(row)
+    }
+  })
+
+  return table2;
+}
+
+console.log(main())
